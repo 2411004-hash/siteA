@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>약관 동의</title>
+  <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+  <style>
+    :root{
+      --brand-color:#0f766e;
+      --brand-dark:#0d5e58;
+      --text-dark:#111827;
+      --text-gray:#6b7280;
+      --border:#e5e7eb;
+      --bg-gray:#f9fafb;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:'Pretendard', sans-serif;
+      color:var(--text-dark);
+      background:#fff;
+      line-height:1.5;
+      -webkit-font-smoothing:antialiased;
+    }
+    .terms-wrap{
+      max-width: 760px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .terms-header{ margin-bottom: 14px; }
+    .terms-title{
+      font-size: 22px;
+      font-weight: 800;
+      margin: 0 0 6px;
+      letter-spacing: -0.3px;
+    }
+    .terms-sub{
+      margin:0;
+      color:var(--text-gray);
+      font-size: 13.5px;
+    }
+    .terms-box{
+      border:1px solid var(--border);
+      border-radius: 14px;
+      background:#fff;
+      overflow:hidden;
+    }
+    .term-row{
+      display:flex;
+      gap:12px;
+      padding: 14px 16px;
+      border-top:1px solid var(--border);
+      align-items:flex-start;
+      background:#fff;
+    }
+    .term-row:first-child{ border-top:none; }
+    .term-row input[type="checkbox"]{
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--brand-color);
+      cursor:pointer;
+    }
+    .term-main{ flex:1; min-width:0; }
+    .term-top{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .term-label{
+      font-size: 14.5px;
+      font-weight: 700;
+      cursor:pointer;
+      user-select:none;
+    }
+    .badge{
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--text-gray);
+      background: #fff;
+    }
+    .badge.req{
+      color: var(--text-dark);
+      border-color: #cbd5e1;
+      background: #f8fafc;
+    }
+    .badge.opt{
+      color: var(--text-gray);
+      border-color: #d1d5db;
+      background: #fafafa;
+    }
+    .term-desc{
+      margin: 6px 0 0;
+      color: var(--text-gray);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .term-row.optional{ opacity: 0.86; }
+    .term-row.optional:hover{ opacity: 0.95; }
+
+    details{
+      margin-top: 10px;
+      background: var(--bg-gray);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+    summary{
+      cursor:pointer;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-dark);
+      list-style:none;
+      user-select:none;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    summary::before{
+      content:"▸";
+      display:inline-block;
+      margin-right: 8px;
+      color: var(--text-gray);
+      transform: translateY(-1px);
+    }
+    details[open] summary::before{ content:"▾"; }
+
+    .terms-text{
+      margin: 10px 0 0;
+      color: #374151;
+      font-size: 12.8px;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    .terms-actions{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      padding: 14px 16px;
+      border-top:1px solid var(--border);
+      background:#fff;
+    }
+    .btn{
+      border:none;
+      cursor:pointer;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-weight: 800;
+      transition: background .15s, opacity .15s;
+    }
+    .btn.primary{
+      background: var(--brand-color);
+      color:#fff;
+    }
+    .btn.primary:hover{ background: var(--brand-dark); }
+    .btn.ghost{
+      background: #f3f4f6;
+      color: var(--text-dark);
+    }
+    .btn.dim{ opacity: .55; }
+
+    /* 팝업(공용) */
+    .modal-bg{
+      position: fixed;
+      inset: 0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background: rgba(0,0,0,.35);
+      z-index: 9999;
+      padding: 16px;
+    }
+    .modal{
+      width: min(460px, 100%);
+      background:#fff;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      padding: 18px 18px 16px;
+    }
+    .modal h3{
+      margin:0 0 8px;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing:-0.2px;
+    }
+    .modal p{
+      margin:0 0 14px;
+      font-size: 13.5px;
+      color: var(--text-gray);
+      line-height: 1.55;
+    }
+    .modal-actions{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+    .btn.soft{
+      background:#f3f4f6;
+      color: var(--text-dark);
+    }
+  </style>
+</head>
+
+<body>
+  <section class="terms-wrap" id="pageTerms">
+    <header class="terms-header">
+      <h1 class="terms-title">약관 동의</h1>
+      <p class="terms-sub">서비스 이용을 위해 필수 항목 동의가 필요합니다. 선택 항목은 필요에 따라 동의할 수 있습니다.</p>
+    </header>
+
+    <div class="terms-box" aria-label="약관 동의 목록">
+      <div class="term-row">
+        <input id="agreeAll" type="checkbox" />
+        <div class="term-main">
+          <div class="term-top">
+            <label class="term-label" for="agreeAll">전체 동의</label>
+            <span class="badge">전체</span>
+          </div>
+          <p class="term-desc">필수 및 선택 항목을 포함해 모두 동의합니다.</p>
+        </div>
+      </div>
+
+      <div class="term-row">
+        <input class="req" id="req1" type="checkbox" />
+        <div class="term-main">
+          <div class="term-top">
+            <label class="term-label" for="req1">이용약관 동의</label>
+            <span class="badge req">필수</span>
+          </div>
+          <p class="term-desc">서비스 이용 조건, 계정 관리, 책임 범위 등 기본 약관에 동의합니다.</p>
+          <details>
+            <summary>내용 보기</summary>
+            <div class="terms-text">
+제1조(목적) 본 약관은 회사가 제공하는 서비스 이용에 관한 조건 및 절차, 권리·의무 및 책임사항을 규정합니다.
+제2조(계정 및 보안) 회원은 정확한 정보를 제공해야 하며, 계정 보안 유지 책임은 회원에게 있습니다.
+제3조(서비스 변경) 회사는 운영상 필요 시 서비스의 일부를 변경하거나 제공을 중단할 수 있으며, 필요한 경우 고지합니다.
+제4조(금지행위) 부정 이용, 권리 침해, 시스템 장애 유발 행위 등은 금지됩니다.
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="term-row">
+        <input class="req" id="req2" type="checkbox" />
+        <div class="term-main">
+          <div class="term-top">
+            <label class="term-label" for="req2">개인정보 처리방침 동의</label>
+            <span class="badge req">필수</span>
+          </div>
+          <p class="term-desc">회원 식별 및 서비스 제공을 위해 필요한 개인정보 수집·이용에 동의합니다.</p>
+          <details>
+            <summary>내용 보기</summary>
+            <div class="terms-text">
+수집 항목(필수): 이메일, 비밀번호(암호화), 서비스 이용기록, 접속 로그, 기기정보
+이용 목적: 회원 관리, 서비스 제공, 고객 문의 대응, 보안 및 부정 이용 방지
+보관 기간: 회원 탈퇴 시 또는 관련 법령에 따른 보관 기간 종료 시까지
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="term-row optional">
+        <input class="opt" id="opt1" type="checkbox" />
+        <div class="term-main">
+          <div class="term-top">
+            <label class="term-label" for="opt1">개인정보 제3자 제공 동의</label>
+            <span class="badge opt">선택</span>
+          </div>
+          <p class="term-desc">제휴사 제공을 통한 혜택 제공·정산 처리 등이 포함될 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="term-row optional">
+        <input class="opt" id="opt2" type="checkbox" />
+        <div class="term-main">
+          <div class="term-top">
+            <label class="term-label" for="opt2">마케팅 정보 수신 동의(이메일/SMS/푸시)</label>
+            <span class="badge opt">선택</span>
+          </div>
+          <p class="term-desc">이벤트·할인·혜택 등 광고성 정보를 수신할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="term-row optional">
+        <input class="opt" id="opt3" type="checkbox" />
+        <div class="term-main">
+          <div class="term-top">
+            <label class="term-label" for="opt3">혜택 제공을 위한 개인정보 위탁 및 국외 이전 동의</label>
+            <span class="badge opt">선택</span>
+          </div>
+          <p class="term-desc">외부 처리업체 이용 과정에서 정보가 처리될 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="terms-actions">
+        <button class="btn ghost" id="btnReset" type="button">초기화</button>
+        <button class="btn primary" id="btnContinue" type="button">동의하고 계속</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <h3 id="modalTitle">안내</h3>
+      <p id="modalDesc"></p>
+      <div class="modal-actions" id="modalActions"></div>
+    </div>
+  </div>
+
+  <script>
+    const $ = (s) => document.querySelector(s);
+
+    // 체크박스: input만 선택
+    const agreeAll = $("#agreeAll");
+    const req = Array.from(document.querySelectorAll('input.req[type="checkbox"]'));
+    const opt = Array.from(document.querySelectorAll('input.opt[type="checkbox"]'));
+
+    // 버튼
+    const btnReset = $("#btnReset");
+    const btnContinue = $("#btnContinue");
+
+    // 모달
+    const modalBg = $("#modalBg");
+    const modalTitle = $("#modalTitle");
+    const modalDesc = $("#modalDesc");
+    const modalActions = $("#modalActions");
+
+    function openModal({ title, desc, buttons }){
+      modalTitle.textContent = title;
+      modalDesc.textContent = desc;
+
+      modalActions.innerHTML = "";
+      buttons.forEach(({ text, className, onClick }) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "btn " + (className || "");
+        b.textContent = text;
+        b.addEventListener("click", onClick);
+        modalActions.appendChild(b);
+      });
+
+      modalBg.style.display = "flex";
+    }
+
+    function closeModal(){
+      modalBg.style.display = "none";
+    }
+
+    // 완료 처리: 설문 링크로 열린 "새 창"이라면 닫힘
+    function finishAndClose(){
+      // 새로 열린 창이면 닫힘 (window.open / target=_blank 등)
+      window.close();
+
+      // 같은 탭/환경에서 자동 닫기가 막히는 경우 안내
+      setTimeout(() => {
+        if (!window.closed) {
+          openModal({
+            title: "완료",
+            desc: "동의가 완료되었습니다. 이 탭(창)을 닫고 설문으로 돌아가 주세요.",
+            buttons: [
+              { text: "확인", className: "primary", onClick: closeModal }
+            ]
+          });
+        }
+      }, 150);
+    }
+
+    function isReqAllChecked(){ return req.every(x => x.checked); }
+    function isOptAllChecked(){ return opt.every(x => x.checked); }
+
+    function refreshAgreeAllView(){
+      const all = [...req, ...opt];
+      const checkedCount = all.filter(x => x.checked).length;
+
+      const allOn = checkedCount === all.length;
+      const noneOn = checkedCount === 0;
+
+      agreeAll.checked = allOn;
+      agreeAll.indeterminate = (!allOn && !noneOn);
+    }
+
+    function toggleAllByAgreeAll(state){
+      [...req, ...opt].forEach(x => x.checked = state);
+      refreshAgreeAllView();
+    }
+
+    // 전체 동의: 토글만
+    agreeAll.addEventListener("change", (e) => {
+      toggleAllByAgreeAll(e.target.checked);
+    });
+
+    // 개별 체크: 전체 동의 표시만 갱신
+    [...req, ...opt].forEach(x => x.addEventListener("change", refreshAgreeAllView));
+
+    // 초기화
+    btnReset.addEventListener("click", () => {
+      [...req, ...opt].forEach(x => x.checked = false);
+      refreshAgreeAllView();
+    });
+
+    // 진행 버튼: req/opt 상태만으로 판단
+    btnContinue.addEventListener("click", () => {
+      if(!isReqAllChecked()){
+        openModal({
+          title: "필수 항목 확인",
+          desc: "서비스 이용을 위해 필수 항목에 동의해 주세요.",
+          buttons: [
+            {
+              text: "확인",
+              className: "primary",
+              onClick: () => {
+                closeModal();
+                $("#req1").scrollIntoView({ behavior:"smooth", block:"center" });
+              }
+            }
+          ]
+        });
+        return;
+      }
+
+      if(!isOptAllChecked()){
+        openModal({
+          title: "선택 항목 확인",
+          desc: "선택 항목 중 미동의된 내용이 있습니다. 미동의 상태로 계속 진행할 수 있습니다.",
+          buttons: [
+            { text: "약관 다시 확인하기", className: "soft", onClick: closeModal },
+            { text: "동의하고 계속", className: "primary dim", onClick: () => { closeModal(); finishAndClose(); } }
+          ]
+        });
+        return;
+      }
+
+      // 전부 동의면 바로 닫기
+      finishAndClose();
+    });
+
+    // 모달 닫기
+    modalBg.addEventListener("click", (e) => { if(e.target === modalBg) closeModal(); });
+    window.addEventListener("keydown", (e) => { if(e.key === "Escape" && modalBg.style.display === "flex") closeModal(); });
+
+    // 초기 표시
+    refreshAgreeAllView();
+  </script>
+</body>
+</html>
